@@ -22,4 +22,22 @@ public class ProdutoService {
 	    Optional<Produto> obj = repository.findById(id);
 	    return obj.get();
 	}
+	
+	public Produto insert(Produto obj) {
+		return repository.save(obj);
+	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+	
+	public Produto update(Long id, Produto obj) {
+		Produto entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(Produto entity, Produto obj) {
+		entity.setNome(obj.getNome());
+	}
 }
