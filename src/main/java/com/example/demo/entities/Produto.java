@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +26,9 @@ public class Produto {
 	@ManyToMany
 	@JoinTable(name = "tb_produto_empresa", joinColumns = @JoinColumn(name = "id_produto"), inverseJoinColumns = @JoinColumn(name = "id_empresa"))
 	private Set<Empresa> empresas = new HashSet<>();
+	
+	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+	private DetalheProduto detalheproduto;
 	
     public Produto() {
     }
@@ -52,6 +57,14 @@ public class Produto {
 	
 	public Set<Empresa> getEmpresas() {
 		return empresas;
+	}
+	
+	public DetalheProduto getDetalheproduto() {
+		return detalheproduto;
+	}
+
+	public void setDetalheproduto(DetalheProduto detalheproduto) {
+		this.detalheproduto = detalheproduto;
 	}
 
 	@Override
